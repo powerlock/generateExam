@@ -2,7 +2,7 @@ import random
 from docx import Document
 import re
 # Open the Word document
-doc = Document('test.docx')
+doc = Document('chapter9.docx')
 
 # Define the bank of questions with their levels of difficulty
 question_bank = {
@@ -33,9 +33,10 @@ for paragraph in doc.paragraphs:
         
         # find the options in the text
         options = re.sub(r'^\d+\)', '', text).strip()#text.split(')')[1].strip()
-        # add the options to the list
-        opt.append(options)
-        print(opt)
+        if current_question is not None:
+            # add the options to the list
+            opt.append(options)
+            print(opt)
         
     #Check if the paragraph contains the answer
     elif 'Answer:' in text:
@@ -48,7 +49,7 @@ for paragraph in doc.paragraphs:
 
     # Check if the paragraph contains the level keyword in the description at the bottom
     elif 'Global Obj:' in text:
-        #print(text)
+        
         # Extract the level keyword from the text
         level = text.split('G')[-1].strip().split()[0]
         current_level = 'G'+str(level)
